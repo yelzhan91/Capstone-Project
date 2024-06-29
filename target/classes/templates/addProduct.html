@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <head th:insert="~{fragments :: head}"></head>
+  <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header th:replace="~{fragments :: mainHeader}"></header>
+
+<main>
+  <div class="container">
+    <h1>Create Product</h1>
+    <div class="error-msg my-3" th:if="${param.failed}">
+      <p class="error-message alert alert-danger">Product insertion was failed.</p>
+    </div>
+    <div class="error-msg my-3" th:if="${param.newProduct}">
+      <p class="alert-success alert alert-success">Product was inserted.</p>
+    </div>
+    <form method="POST" th:action="@{/admin/addProduct}" th:object="${request}">
+      <div class="form-group mb-5">
+        <label for="productName">Product Name:</label>
+        <input type="text"
+               class="form-control"
+               id="productName"
+               name="productName"
+               th:field="*{productName}"
+               required>
+      </div>
+      <div class="form-group mb-5">
+        <label for="description">Description:</label>
+        <textarea class="form-control"
+                  id="description"
+                  name="description"
+                  rows="3"
+                  th:field="*{description}"
+                  required></textarea>
+      </div>
+      <div class="form-group mb-5" >
+        <label for="categorySelect">Select category</label>
+        <select class="form-control" id="categorySelect" th:field="*{category}">
+          <option th:each="category : ${categories}"
+                  th:text="${category.category}"
+                  th:value="${category.category}" ></option>
+        </select>
+      </div>
+      <div class="form-group mb-5">
+        <label for="image">Specify link to the image:</label>
+        <input type="text"
+               class="form-control-file"
+               id="image"
+               name="image"
+               th:field="*{image}">
+      </div>
+      <div class="form-group mb-5">
+        <label>Is Adult:</label>
+        <div class="form-check">
+          <input class="form-check-input"
+                 type="radio"
+                 name="isAdult"
+                 id="isAdultYes"
+                 value="true"
+                 th:field="*{adult}"
+                 required>
+          <label class="form-check-label" for="isAdultYes">Yes</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input"
+                 type="radio"
+                 name="isAdult"
+                 id="isAdultNo"
+                 value="false"
+                 th:field="*{adult}"
+                 required>
+          <label class="form-check-label" for="isAdultNo">No</label>
+        </div>
+      </div>
+      <div class="form-group mb-5">
+        <label>Gender:</label>
+        <div class="form-check">
+          <input class="form-check-input"
+                 type="radio"
+                 name="gender"
+                 id="genderMale"
+                 value="Male"
+                 th:field="*{gender}"
+                 required>
+          <label class="form-check-label" for="genderMale">Male</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input"
+                 type="radio"
+                 name="gender"
+                 id="genderFemale"
+                 value="Female"
+                 th:field="*{gender}"
+                 required>
+          <label class="form-check-label" for="genderFemale">Female</label>
+        </div>
+      </div>
+      <div class="form-group mb-5">
+        <label for="quantity">Quantity:</label>
+        <input type="number"
+               class="form-control"
+               min="1"
+               id="quantity"
+               name="quantity"
+               th:field="*{quantity}"
+               required>
+      </div>
+      <div class="form-group mb-5">
+        <label for="unitPrice">Unit Price:</label>
+        <input type="number"
+               class="form-control"
+               id="unitPrice"
+               name="unitPrice"
+               step="0.01"
+               th:field="*{unitPrice}"
+               required>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</main>
+</body>
+</html>

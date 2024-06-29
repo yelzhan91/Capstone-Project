@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <head th:insert="~{fragments :: head}"></head>
+  <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header th:replace="~{fragments :: mainHeader}"></header>
+
+<main>
+  <div class="container">
+    <h3 class="mb-3">Users list</h3>
+    <table id="example" class="table table-bordered" style="width: 100%">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th>Date of Birth</th>
+          <th>Is Active</th>
+          <th>Activate/Deactivate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="user : ${users.getContent()}">
+          <td th:text="${user.id}">ID</td>
+          <td th:text="${user.firstName}">First Name</td>
+          <td th:text="${user.lastName}">Last Name</td>
+          <td th:text="${user.email}">Email</td>
+          <td th:text="${user.phoneNumber}">Phone Number</td>
+          <td th:text="${#temporals.format(user.dateOfBirth, 'dd-MM-yy')}">Date of Birth</td>
+          <td th:text="${user.isActive}">Is Active</td>
+          <td th:if="${user.isActive}">
+            <form th:action="@{/admin/deactivate/{id}(id=${user.id})}" method="post">
+              <button th:unless="${currentId == user.id}" type="submit" class="btn btn-danger">Deactivate</button>
+            </form>
+          </td>
+          <td th:unless="${user.isActive}">
+            <form th:action="@{/admin/activate/{id}(id=${user.id})}" method="post">
+              <button type="submit" class="btn btn-primary">Activate</button>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <nav aria-label="Page navigation" class="paging">
+      <ul class="pagination" th:if="${users.totalPages > 1}">
+        <li class="page-item" th:class="${users.first ? 'disabled' : ''}">
+          <a class="page-link" th:href="@{${'/admin/userList'}(page=0)}" aria-label="First">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item" th:class="${users.first ? 'disabled' : ''}">
+          <a class="page-link" th:href="@{${'/admin/userList'}(page=${users.number - 1})}" aria-label="Previous">
+            <span aria-hidden="true">&lsaquo;</span>
+          </a>
+        </li>
+        <li class="page-item" th:each="page : ${#numbers.sequence(0, users.totalPages - 1)}"
+            th:class="${page == users.number ? 'active' : ''}">
+          <a class="page-link" th:href="@{${'/admin/userList'}(page=${page})}">[[${page + 1}]]</a>
+        </li>
+        <li class="page-item" th:class="${users.last ? 'disabled' : ''}">
+          <a class="page-link" th:href="@{${'/admin/userList'}(page=${users.number + 1})}" aria-label="Next">
+            <span aria-hidden="true">&rsaquo;</span>
+          </a>
+        </li>
+        <li class="page-item" th:class="${users.last ? 'disabled' : ''}">
+          <a class="page-link" th:href="@{${'/admin/userList'}(page=${users.totalPages - 1})}" aria-label="Last">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+</main>
+
+</body>
+</html>

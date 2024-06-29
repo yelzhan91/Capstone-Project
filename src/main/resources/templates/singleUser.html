@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+  <head th:insert="~{fragments :: head}"></head>
+  <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header th:replace="~{fragments :: mainHeader}"></header>
+
+<main>
+<div class="container">
+  <h3 class="mb-3 text-center" >Single user</h3>
+  <section class="gradient-custom">
+    <div class="container py-5 h-100">
+      <div class="row justify-content-center align-items-center h-100">
+        <div class="col-12 col-lg-9 col-xl-7">
+          <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+            <div class="card-body p-4 p-md-5">
+              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">Find user by email</h3>
+              <div th:if="${param.errorMessage}" class="my-4">
+                <p class="error-message alert alert-danger" th:text="${param.errorMessage}"></p>
+              </div>
+              <form method="post" th:action="@{/admin/singleUser}">
+                <div class="row">
+                  <div class="col-md-12 mb-3">
+                    <div class="form-outline">
+                      <label class="form-label" for="email">Email</label>
+                      <input type="email"
+                             name="email"
+                             id="email"
+                             class="form-control form-control-md">
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-md mt-2">Find</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <table id="example" class="table table-bordered" style="width: 100%">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Phone Number</th>
+      <th>Date of Birth</th>
+      <th>Is Active</th>
+      <th>Activate/Deactivate</th>
+    </tr>
+    </thead>
+    <tbody th:if="${user != null}" th:object="${user}">
+    <tr>
+      <td th:text="*{id}">ID</td>
+      <td th:text="*{firstName}">First Name</td>
+      <td th:text="*{lastName}">Last Name</td>
+      <td th:text="*{email}">Email</td>
+      <td th:text="*{phoneNumber}">Phone Number</td>
+      <td th:text="*{#temporals.format(dateOfBirth, 'dd-MM-yy')}">Date of Birth</td>
+      <td th:text="*{isActive}">Is Active</td>
+      <td th:object="${user}" th:if="*{email}">
+        <form th:action="@{/admin/deactivate/{id}(id=${user.id})}" method="post" th:if="${user.isActive}">
+          <button th:if="${currentId != user.id}" type="submit" class="btn btn-danger">Deactivate</button>
+        </form>
+        <form th:action="@{/admin/activate/{id}(id=${user.id})}" method="post" th:unless="${user.isActive}">
+          <button type="submit" class="btn btn-primary">Activate</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>
+
+</main>
+
+</body>
+</html>

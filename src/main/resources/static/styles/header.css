@@ -1,0 +1,45 @@
+.header {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    background-color: #333;
+}
+.header .header-container {
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+}
+.header .header-container .logo a {
+    text-decoration: none;
+    color: white;
+}
+.header .header-container .logo a h1 {
+    font-size: 24px;
+    transition: 0.2s;
+}
+.header .header-container .logo a :hover {
+    font-size: 28px;
+}
+.header .header-container .navigation-panel {
+    display: flex;
+    align-items: center;
+}
+.header .header-container .navigation-panel .navigation {
+    display: flex;
+    list-style-type: none;
+}
+.header .header-container .navigation-panel .navigation .nav-link {
+    display: inline-block;
+    margin: 0 0.5rem;
+}
+.header .header-container .navigation-panel .navigation .nav-link a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 6px;
+    padding: 10px;
+    transition: 0.5s;
+}
+.header .header-container .navigation-panel .navigation .nav-link :hover {
+    background-color: #6c6c6c;
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <head th:replace="~{fragments :: head}"></head>
+  <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header th:replace="~{fragments :: mainHeader}"></header>
+
+<main>
+  <div class="container">
+    <table id="example-c" class="table table-bordered" style="width: 100%" th:if="cartItems != null">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Delete</th>
+      </tr>
+      </thead>
+      <tbody th:if="sessionCart != null">
+      <tr th:each="item : ${sessionCart.getItems()}">
+        <td th:text="${item.id}">ID</td>
+        <td th:text="${item.product.name}">First Name</td>
+        <td th:text="${item.quantity}">Last Name</td>
+        <td th:object="${item}">
+          <form th:action="@{/cart/deleteItem/{id}(id=${item.id})}" method="post">
+            <button type="submit" class="btn btn-danger">Delete item</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</main>
+</body>
+</html>

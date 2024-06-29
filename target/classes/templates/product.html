@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org">
+<head>
+    <head th:replace="~{fragments :: head}"></head>
+    <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header th:replace="~{fragments :: mainHeader}"></header>
+<main>
+    <div class="container">
+
+        <div class="goods d-flex justify-content-around flex-wrap">
+            <div th:if="${#lists.size(products.getContent()) <= 0}">
+                <p>There is no products yet :(</p>
+            </div>
+            <section th:if="${#lists.size(products.getContent()) > 0}" th:each="product : ${products}">
+                <div class="text-center container py-5 d-flex">
+                    <div class="col-md-12 mb-4">
+                        <div class="card">
+                            <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
+                                 data-mdb-ripple-color="light">
+                                <img th:src="${product.image}"
+                                     width="275"
+                                     height="367"/>
+                                <a href="#">
+                                    <div class="mask">
+                                        <div class="d-flex justify-content-start align-items-end h-100 my-3">
+                                            <h5><span class="badge ms-2 bg-primary" th:text="${product.getGender().getGender()}"></span></h5>
+                                            <h5 th:if="${product.quantity == 0}">
+                                                <span class="badge ms-2 bg-info">
+                                                    Not in stock
+                                                </span>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <div class="hover-overlay">
+                                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="card-body">
+
+                                <h5 class="card-title mb-3" th:text="${product.name}"></h5>
+
+                                <a href="" class="text-reset">
+                                    <p th:text="${product.category.category}"></p>
+                                </a>
+                                <h6 class="mb-3" th:text="${product.unitPrice + '$'}"></h6>
+                                <form sec:authorize="isAuthenticated()" th:action="@{'../cart/addToCart/'+${product.id}}" method="post">
+                                    <button type="submit" class="btn btn-primary">Add to cart</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <nav aria-label="Page navigation" class="paging">
+            <ul class="pagination" th:if="${products.totalPages > 1}">
+                <li class="page-item" th:class="${products.first ? 'disabled' : ''}">
+                    <a class="page-link" th:href="@{${isAdult}(gender=${param.gender},page=0)}" aria-label="First">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" th:class="${products.first ? 'disabled' : ''}">
+                    <a class="page-link" th:href="@{${isAdult}(gender=${param.gender},page=${products.number - 1})}" aria-label="Previous">
+                        <span aria-hidden="true">&lsaquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" th:each="page : ${#numbers.sequence(0, products.totalPages - 1)}"
+                    th:class="${page == products.number ? 'active' : ''}">
+                    <a class="page-link" th:href="@{${isAdult}(gender=${param.gender},page=${page})}">[[${page + 1}]]</a>
+                </li>
+                <li class="page-item" th:class="${products.last ? 'disabled' : ''}">
+                    <a class="page-link" th:href="@{${isAdult}(gender=${param.gender},page=${products.number + 1})}" aria-label="Next">
+                        <span aria-hidden="true">&rsaquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" th:class="${products.last ? 'disabled' : ''}">
+                    <a class="page-link" th:href="@{${isAdult} (gender=${param.gender}, page=${products.totalPages - 1})}" aria-label="Last">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</main>
+</body>
+</html>

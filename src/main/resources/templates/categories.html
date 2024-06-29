@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html lang="en">
+<head>
+  <head th:insert="~{fragments :: head}"></head>
+  <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header th:replace="~{fragments :: mainHeader}"></header>
+
+<main>
+  <div class="container">
+    <h3 class="mb-3">Category list</h3>
+
+    <section class="gradient-custom">
+      <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+          <div class="col-12 col-lg-9 col-xl-7">
+            <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+              <div class="card-body p-4 p-md-5">
+                <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">Add category</h3>
+                <div th:if="${param.errorMessage}" class="my-4">
+                  <p class="error-message alert alert-danger" th:text="${param.errorMessage}"></p>
+                </div>
+                <div th:if="${param.newCategory}" class="my-4">
+                  <p class="error-message alert alert-success">Category has been added</p>
+                </div>
+                <div th:if="${param.deleted}" class="my-4">
+                  <p class="error-message alert alert-success">Category has been deleted</p>
+                </div>
+                <form method="post" th:action="@{/admin/addCategory}" th:object="${request}">
+                  <div class="row">
+                    <div class="col-md-12 mb-3">
+                      <div class="form-outline">
+                        <label class="form-label" for="category">Category</label>
+                        <input type="text"
+                               name="category"
+                               id="category"
+                               class="form-control form-control-md" th:field="*{category}">
+                      </div>
+                      <div class="form-outline">
+                        <label class="form-label" for="description">Description</label>
+                        <input type="text"
+                               name="description"
+                               id="description"
+                               class="form-control form-control-md" th:field="*{description}">
+                      </div>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-md mt-2">Add</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <table id="example" class="table table-bordered" style="width: 100%" th:if="categories != null">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Category Name</th>
+        <th>Description</th>
+        <th>Delete</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="category : ${categories.getContent()}">
+        <td th:text="${category.id}">ID</td>
+        <td th:text="${category.category}">First Name</td>
+        <td th:text="${category.description}">Last Name</td>
+        <td th:object="${category}">
+          <form th:action="@{/admin/deleteCategory/{id}(id=${category.id})}" method="post">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <nav aria-label="Page navigation" class="paging">
+      <ul class="pagination" th:if="${categories.totalPages > 1}">
+        <li class="page-item" th:class="${categories.first ? 'disabled' : ''}">
+          <a class="page-link" th:href="@{${'/admin/categoryList'}(page=0)}" aria-label="First">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item" th:class="${categories.first ? 'disabled' : ''}">
+          <a class="page-link" th:href="@{${'/admin/categoryList'}(page=${categories.number - 1})}" aria-label="Previous">
+            <span aria-hidden="true">&lsaquo;</span>
+          </a>
+        </li>
+        <li class="page-item" th:each="page : ${#numbers.sequence(0, categories.totalPages - 1)}"
+            th:class="${page == categories.number ? 'active' : ''}">
+          <a class="page-link" th:href="@{${'/admin/categoryList'}(page=${page})}">[[${page + 1}]]</a>
+        </li>
+        <li class="page-item" th:class="${categories.last ? 'disabled' : ''}">
+          <a class="page-link" th:href="@{${'/admin/categoryList'}(page=${categories.number + 1})}" aria-label="Next">
+            <span aria-hidden="true">&rsaquo;</span>
+          </a>
+        </li>
+        <li class="page-item" th:class="${categories.last ? 'disabled' : ''}">
+          <a class="page-link" th:href="@{${'/admin/categoryList'}(page=${categories.totalPages - 1})}" aria-label="Last">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+</main>
+
+</body>
+</html>

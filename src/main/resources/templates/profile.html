@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <head th:insert="~{fragments :: head}"></head>
+  <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header th:insert="~{fragments :: mainHeader}"></header>
+<main class="main d-flex flex-column">
+  <div class="container mb-5">
+    <div class="d-flex justify-content-center mb-3">
+      <h5 class="text-center">Profile page </h5>
+    </div>
+    <p th:if="${param.update}" class="alert alert-success">Updated successfully.</p>
+    <p th:if="${param.passwordChange}" class="alert alert-success">Password was changed successfully.</p>
+    <div class="cards d-flex justify-content-around mt-5">
+      <div class="custom-card">
+        <div class="card-details">
+          <p class="text-title">My Orders</p>
+          <p class="text-body">Check history of your orders</p>
+        </div>
+        <a href="#" class="btn-primary card-button text-center">See orders</a>
+      </div>
+      <div class="custom-card">
+        <div class="card-details">
+          <p class="text-title">Edit profile</p>
+          <p class="text-body">Edit your profile information</p>
+        </div>
+        <a th:href="@{/profile/edit}" class="btn-primary card-button text-center">Edit</a>
+      </div>
+    </div>
+  </div>
+  <div class="container mt-lg-5">
+    <h3 class="text-center mb-3">User information</h3>
+    <div class="info mb-3 d-flex justify-content-center">
+      <table class="table table-bordered" th:object="${user}" style="width: 50%">
+        <tbody>
+        <tr>
+          <th scope="row">First Name</th>
+          <td th:text="*{firstName}"></td>
+        </tr>
+        <tr>
+          <th scope="row">Last Name</th>
+          <td th:text="*{lastName}"></td>
+        </tr>
+        <tr>
+          <th scope="row">Email</th>
+          <td th:text="*{email}"></td>
+        </tr>
+        <tr>
+          <th scope="row">Phone number</th>
+          <td th:text="*{phoneNumber}"></td>
+        </tr>
+        <tr>
+          <th scope="row">Date of birth</th>
+          <td th:text="${#temporals.format(user.dateOfBirth, 'dd-MM-yy')}"></td>
+        </tr>
+        <tr>
+          <th scope="row">Date of registration</th>
+          <td th:text="${#temporals.format(user.registrationDate, 'dd-MM-yy')}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+</body>
+</html>

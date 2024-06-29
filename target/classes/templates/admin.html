@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head th:insert="~{fragments :: head}"></head>
+    <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header th:replace="~{fragments :: mainHeader}"></header>
+<main>
+    <div class="container">
+        <div class="actions d-flex justify-content-evenly flex-wrap">
+            <div class="card-container">
+                <a th:href="@{/admin/userList}" style="text-decoration: none;">
+                    <div class="box text-center d-flex justify-content-center align-items-center">
+                        <span class="title">
+                            Get all users
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="card-container">
+                <a th:href="@{/admin/singleUser}" style="text-decoration: none;">
+                    <div class="box text-center d-flex justify-content-center align-items-center">
+                        <span class="title">
+                            Get user by email
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="card-container">
+                <a th:href="@{/admin/categoryList}" style="text-decoration: none;">
+                    <div class="box text-center d-flex justify-content-center align-items-center">
+                        <span class="title">
+                            List categories
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="card-container">
+                <a th:href="@{/admin/addAdmin}" style="text-decoration: none;">
+                    <div class="box text-center d-flex justify-content-center align-items-center">
+                        <span class="title">
+                            Add admin
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="card-container">
+                <a th:href="@{/admin/addProduct}" style="text-decoration: none;">
+                    <div class="box text-center d-flex justify-content-center align-items-center">
+                        <span class="title">
+                            Place product
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

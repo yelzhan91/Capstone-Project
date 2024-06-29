@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html lang="en">
+<head>
+  <head th:insert="~{fragments :: head}"></head>
+  <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header th:replace="~{fragments :: mainHeader}"></header>
+<main>
+
+  <section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+      <div class="row justify-content-center align-items-center h-100">
+        <div class="col-12 col-lg-9 col-xl-7">
+          <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+            <div class="card-body p-4 p-md-5">
+              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">New admin Form</h3>
+              <p th:if="${param.failed}" class="error-message alert alert-danger">Registration of new admin failed. Please check the form.</p>
+              <p th:if="${param.errorMessage}" th:text="${param.errorMessage}" class="error-message alert alert-danger"></p>
+              <p th:if="${param.newAdmin}" class="alert-success alert alert-success">New admin was created.</p>
+              <form method="post" th:action="@{/admin/addAdmin}" th:object="${request}">
+                <div class="row">
+                  <div class="col-md-12 mb-3">
+                    <div class="form-outline">
+                      <label class="form-label" for="firstName">First Name</label>
+                      <input type="text"
+                             name="firstName"
+                             id="firstName"
+                             class="form-control form-control-md"
+                             th:field="*{firstName}">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 mb-3">
+                    <div class="form-outline">
+                      <label class="form-label" for="lastName">Last Name</label>
+                      <input type="text"
+                             name="lastName"
+                             id="lastName"
+                             class="form-control form-control-md"
+                             th:field="*{lastName}">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 mb-3">
+                    <div class="form-outline datepicker w-100">
+                      <label class="form-label" for="dateOfBirth">Date of Birth</label>
+                      <input type="date"
+                             name="dateOfBirth"
+                             id="dateOfBirth"
+                             class="form-control form-control-md"
+                             th:field="*{dateOfBirth}">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 mb-3">
+                    <div class="form-outline">
+                      <label class="form-label" for="email">Email</label>
+                      <input type="email"
+                             name="email"
+                             id="email"
+                             class="form-control form-control-md"
+                             th:field="*{email}" pattern="[a-zA-Z0-9_\-.+]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 mb-3">
+                    <div class="form-outline">
+                      <label class="form-label" for="password">Password</label>
+                      <input type="password"
+                             name="password"
+                             id="password"
+                             class="form-control form-control-md"
+                             th:field="*{password}">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 mb-4">
+                    <div class="form-outline">
+                      <label class="form-label" for="matchingPassword">Matching password</label>
+                      <input type="password"
+                             name="matchingPassword"
+                             id="matchingPassword"
+                             class="form-control form-control-md"
+                             th:field="*{matchingPassword}">
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-md mt-2">Register new admin</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>

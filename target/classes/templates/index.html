@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org">
+<head>
+    <head th:replace="~{fragments :: head}"></head>
+    <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header th:replace="~{fragments :: mainHeader}"></header>
+<main class="main">
+    <div class="container">
+
+        <section class="hero-section">
+            <div class="section-title mb-5">
+                <h2 class="title">Who you choose clothes for</h2>
+            </div>
+            <div class="card-container">
+                <div class="_card">
+                    <a th:href="@{/products/true(gender='Male')}">
+                        <div class="card-background" style="background-image: url(../static/images/Male-adult.jpg)"></div>
+                        <div class="content">
+                            <div class="card-category">clothes for</div>
+                            <h3 class="card-heading">Men</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="_card">
+                    <a th:href="@{/products/true(gender='Female')}">
+                        <div class="card-background"
+                             style="background-image: url(../static/images/Female-adult.jpg);"></div>
+                        <div class="content">
+                            <div class="card-category">clothes for</div>
+                            <h3 class="card-heading">Women</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="_card">
+                    <a th:href="@{/products/false(gender='Male')}">
+                        <div class="card-background" style="background-image: url(../static/images/Male-child.jpg);"></div>
+                        <div class="content">
+                            <div class="card-category">clothes for</div>
+                            <h3 class="card-heading">Boys</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="_card">
+                    <a th:href="@{/products/false(gender='Female')}">
+                        <div class="card-background"
+                             style="background-image: url(../static/images/Female-child.jpg)"></div>
+                        <div class="content">
+                            <div class="card-category">clothes for</div>
+                            <h3 class="card-heading">Girls</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>
+</html>

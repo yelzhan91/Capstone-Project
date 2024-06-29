@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head th:replace="~{fragments :: head}"></head>
+    <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header th:insert="~{fragments :: authHeader}"></header>
+<main class="form-signin w-100 m-auto text-center">
+    <div class="container">
+        <form method="post" role="form" th:action="@{/login}">
+            <h1 class="h3 mb-3 fw-normal">Login</h1>
+            <p th:if="${param.error}" class="error-message alert alert-danger">Invalid username or password.</p>
+            <p th:if="${param.registration}" class="alert alert-success">You have been registered successfully.</p>
+            <div class="form-floating">
+                <input type="email"
+                       class="form-control"
+                       id="email"
+                       placeholder="name@example.com"
+                       name="email" pattern="[a-zA-Z0-9_\-.+]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+">
+                <label for="email">Email</label>
+            </div>
+            <div class="form-floating">
+                <input type="password"
+                       class="form-control"
+                       id="password"
+                       placeholder="Password"
+                       name="password">
+                <label for="password">Password</label>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" value="Log in" type="submit">Log in</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

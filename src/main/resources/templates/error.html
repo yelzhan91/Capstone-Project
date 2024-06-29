@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <head th:replace="~{fragments :: head}"></head>
+  <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header th:replace="~{fragments :: mainHeader}"></header>
+<main>
+  <div class="d-flex align-items-start justify-content-center vh-100">
+    <h3 class="mb-5" th:text="${param.errorMessage}"></h3>
+    <p th:text="${previousPage}"></p>
+  </div>
+</main>
+</body>
+</html>
